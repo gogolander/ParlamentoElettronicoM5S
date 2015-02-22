@@ -222,24 +222,30 @@ ui.container {
                             }
                         end
                     end
-                }                  
+                }
                 ui.container {
-                    attr = { class = "row-fluid spaceline" },
+                    attr = { class = "row-fluid" },
                     content = function()
                         ui.container {
-                            attr = { class = "span12 well-blue" },
-                            content = function()                              
-                																ui.container {
-                                    attr = { class = "row-fluid spaceline" },
+                            attr = { class = "span12 well-blue spaceline" },
+                            content = function()
+                                ui.container {
+                                    attr = { class = "row-fluid" },
                                     content = function()
                                         ui.container {
-                                            attr = { class = "span6 well-inside paper" },
+                                            attr = { class = "span2 well-warning" },
                                             content = function()
                                                 execute.view { module = "issue", view = "info_box", params = { issue = issue } }
                                             end
                                         }
                                         ui.container {
-                                            attr = { class = "span2 text-center offset3" },
+                                            attr = { class = "span9" },
+                                            content = function()
+                                                execute.view { module = "issue", view = "phasesbar", params = { state = issue.state } }
+                                            end
+                                        }
+                                        ui.container {
+                                            attr = { class = "span1 text-center" },
                                             content = function()
                                                 ui.field.popover {
                                                     attr = {
@@ -251,33 +257,16 @@ ui.container {
                                                         class = "text-center"
                                                     },
                                                     content = function()
-
+                                                        ui.container {
+                                                            attr = { class = "row-fluid" },
+                                                            content = function()
                                                                 ui.image { static = "png/tutor.png" }
-
+                                                            end
+                                                        }
                                                     end
                                                 }
                                             end
                                         }
-                                        end
-                                    }
-
-
-                                ui.container {
-                                    attr = { class = "row-fluid" },
-                                    content = function()
-                                        ui.container {
-                                            attr = { class = "span1" },
-                                            content = function()
- 																																															ui.image { static = "spacer.png" }
-                                            end
-                                        }
-                                        ui.container {
-                                            attr = { class = "span9" },
-                                            content = function()
-                                                execute.view { module = "issue", view = "phasesbar", params = { state = issue.state } }
-                                            end
-                                        }
-
                                     end
                                 }
                             end
@@ -623,15 +612,16 @@ ui.container {
                                                                 ui.container {
                                                                     content = function()
                                                                         local resource = Resource:by_initiative_id(initiative.id)
-                                                                        if resource and resource.url ~= "" then
-                                                                            if resource.url:gmatch("https://www.youtube.com/watch?v=") then
+                                                                        if resource ~= nil then
+                                                                            if resource.url == "" then
+                                                                            		ui.image { static = "png/video-player.png" }
+                                                                            elseif string.find(resource.url, "https://www.youtube.com/watch") then
                                                                                 local code = resource.url:sub(resource.url:find("=") + 1)
                                                                                 trace.debug("url: " .. resource.url .. "; code: " .. code)
                                                                                 trace.debug(code)
                                                                                 slot.put('<iframe width=\"100%\" height=\"315\" src=\"//www.youtube.com/embed/' .. code .. '\" frameborder=\"0\" allowfullscreen></iframe>')
                                                                             else
-                                                                                trace.debug("url: " .. resource.url)
-                                                                                slot.put('<iframe width="100%" height="315" src="//www.youtube.com/embed/' .. resource.url .. '" frameborder="0" allowfullscreen></iframe>')
+                                                                                slot.put(_"Wrong link format")
                                                                             end
                                                                         else
                                                                             ui.image { static = "png/video-player.png" }
@@ -640,7 +630,7 @@ ui.container {
 				                                                                	ui.link {
 				                                                                		module = "initiative",
 				                                                                		view = "edit_video",
-				                                                                		params = { initiative_id = initiative.id },
+				                                                                		id = initiative.id,
 				                                                                		attr = { class = "btn btn-primary btn-large large_btn" },
 				                                                                		text = _"Change video url"
 				                                                                	}
@@ -773,23 +763,22 @@ ui.container {
                                             attr = { class = "row-fluid" },
                                             content = function()
                                                 if #initiators > 1 then
-                                                    ui.container {
-                                                        attr = { class = "span12" },
-                                                        content = function()
-                                                            for i, initiator in ipairs(initiators) do
-                                                                execute.view {
-                                                                    module = "member",
-                                                                    view = "_show_thumb",
-                                                                    params = {
-                                                                        member = initiator,
-                                                                        initiative = initiative,
-                                                                        issue = issue,
-                                                                        initiator = initiator
-                                                                    }
+                                                    for i, initiator in ipairs(initiators) do
+                                                        slot.put(" ")
+                                                        if app.session:has_access("everything") then
+                                                            execute.view {
+                                                                module = "member",
+                                                                view = "_show_thumb",
+                                                                params = {
+                                                                    member = initiator,
+                                                                    initiative = initiative,
+                                                                    issue = issue,
+                                                                    initiator = initiator
                                                                 }
-                                                            end
+                                                            }
+                                                            slot.put(" ")
                                                         end
-                                                    }
+                                                    end
                                                 else
                                                     ui.container {
                                                         attr = { class = "row-fluid" },
@@ -797,9 +786,7 @@ ui.container {
                                                             ui.container {
                                                                 attr = { class = "span12" },
                                                                 content = function()
-                                                                    if issue.member_id then
-                                                                        execute.view { module = "member", view = "_info_data", id = issue.member_id, params = { module = "initiative", view = "show", content_id = initiative.id } }
-                                                                    end
+                                                                    execute.view { module = "member", view = "_info_data", id = initiators[1].id, params = { module = "initiative", view = "show", content_id = initiative.id } }
                                                                 end
                                                             }
                                                         end
@@ -947,7 +934,7 @@ ui.container {
                                                         module = "initiative",
                                                         view = "revoke",
                                                         id = initiative.id,
-                                                        image = { attr = { class = "span2" }, static = "png/cross.png" },
+                                                        image = { attr = { class = "span3" }, static = "png/cross.png" },
                                                         content = _ "Revoke initiative"
                                                     }
                                                 end

@@ -87,6 +87,14 @@ Initiative:add_reference {
 }
 
 Initiative:add_reference {
+    mode = 'm1',
+    to = "Initiative",
+    this_key = 'id',
+    that_key = 'intiative_id',
+    ref = 'resources',
+}
+
+Initiative:add_reference {
     mode = 'mm',
     to = "Member",
     this_key = 'id',

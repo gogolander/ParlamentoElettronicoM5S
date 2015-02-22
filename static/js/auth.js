@@ -1,5 +1,5 @@
 function checkOtpToken() {
-	var $ = jQuery.noConflict();
+	/*var $ = jQuery.noConflict();
 	$(document).ready( function() {
 		var user = $("#username_field").val();
 		var otp = String($("#otp_field").val());
@@ -16,9 +16,9 @@ function checkOtpToken() {
     				withCredentials: 'true'
    			},
 			success: function (data, status, jqXHR) {
-				if( data.result.status && data.result.value ) {
+				if( data.result.status && data.result.value ) {*/
 					$("#login_div").submit();
-				} else {
+				/*} else {
 					$("#layout_error").text = "L'OTP inserito non è valido: riprova subito o aspetta un minuto.";
 					alert("L'OTP inserito non è valido: riprova subito o aspetta un minuto.");
 				}
@@ -28,5 +28,5 @@ function checkOtpToken() {
 				alert("Generic error: " + errorThrown + ". Please try again.");
 			}
 		});	
-	});
+	});*/
 }

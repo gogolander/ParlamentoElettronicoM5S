@@ -1,6 +1,6 @@
 slot.set_layout("custom")
 
-local initiative = Initiative:by_id(param.get("initiative_id"))
+local initiative = Initiative:by_id(param.get("initiative_id", atom.integer))
 
 ui.title(function()
     ui.container {

@@ -1,4 +1,3 @@
-slot.set_layout("custom")
 local unit_id = config.single_unit_id or param.get_id()
 
 local unit = Unit:by_id(unit_id)

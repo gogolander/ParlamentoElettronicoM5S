@@ -8,7 +8,7 @@ slot.select('navbar', function()
                     ui.link {
                         module = 'index',
                         view = 'index',
-                        image = { static = "logo_withe.png" },
+                        image = { static = "logo_white.png" },
                         text = ""
                     }
                     --                end
