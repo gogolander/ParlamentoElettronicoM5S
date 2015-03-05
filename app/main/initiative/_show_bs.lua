@@ -630,8 +630,8 @@ ui.container {
 				                                                                	ui.link {
 				                                                                		module = "initiative",
 				                                                                		view = "edit_video",
-				                                                                		id = initiative.id,
-				                                                                		attr = { class = "btn btn-primary btn-large large_btn" },
+				                                                                		params = { initiative_id = initiative.id },
+				                                                                		attr = { class = "btn btn-primary large_btn spaceline spaceline-bottom" },
 				                                                                		text = _"Change video url"
 				                                                                	}
                                                                     	end
@@ -797,17 +797,16 @@ ui.container {
                                         ui.container {
                                             attr = { class = "row-fluid spaceline" },
                                             content = function()
-                                                ui.container {
-                                                    attr = { class = "row-fluid" },
-                                                    content = function()
+
                                                         ui.container {
                                                             attr = { class = "span12" },
                                                             content = function()
                                                                 ui.tag { tag = "hr" }
                                                             end
                                                         }
-                                                    end
-                                                }
+                                                ui.container {
+                                                    attr = { class = "row-fluid text-center" },
+                                                    content = function()
 -- invited as initiator
   if initiator and initiator.accepted == nil and not initiative.issue.half_frozen and not initiative.issue.closed then
     ui.container{
@@ -816,7 +815,7 @@ ui.container {
         slot.put(_"You are invited to become initiator of this initiative.")
         slot.put(" ")
         ui.link{
-	  attr = { class = "btn btn-primary text-center" },
+	  attr = { class = "btn btn-primary medium_btn text-center spaceline-bottom" },
           image  = { static = "icons/16/tick.png" },
           text   = _"Accept invitation",
           module = "initiative",
@@ -834,7 +833,7 @@ ui.container {
         }
         slot.put(" ")
         ui.link{
-	  attr = { class = "btn btn-primary text-center" },
+	  attr = { class = "btn btn-primary medium_btn text-center spaceline-bottom" },
           image  = { static = "icons/16/cross.png" },
           text   = _"Refuse invitation",
           module = "initiative",
@@ -858,7 +857,7 @@ ui.container {
   end
                                                 if initiator and initiator.accepted and not initiative.issue.fully_frozen and not initiative.issue.closed and not initiative.revoked then
                                                     ui.link {
-                                                        attr = { class = "action btn btn-primary text-center" },
+                                                        attr = { class = "btn btn-primary medium_btn text-center spaceline-bottom" },
                                                         content = function()
                                                             slot.put(_ "Invite initiator")
                                                         end,
@@ -869,7 +868,7 @@ ui.container {
                                                     if #initiators > 1 then
 							slot.put(" ")
                                                         ui.link {
-							    attr = { class = "btn btn-primary text-center" },
+							    attr = { class = "btn btn-primary medium_btn text-center spaceline-bottom" },
                                                             content = function()
                                                                 slot.put(_ "Remove initiator")
                                                             end,
@@ -882,7 +881,7 @@ ui.container {
                                                 if initiator and initiator.accepted == false then
 						    slot.put(" ")
                                                     ui.link {
-							attr = { class = "btn btn-primary text-center" },
+							attr = { class = "btn btn-primary medium_btn text-center spaceline-bottom" },
                                                         text = _ "Cancel refuse of invitation",
                                                         module = "initiative",
                                                         action = "remove_initiator",
@@ -906,7 +905,7 @@ ui.container {
 							    slot.put(" ")
                                                             ui.link {
                                                                 attr = {
-								    class = "btn btn-primary text-center",
+								    class = "btn btn-primary medium_btn text-center spaceline-bottom",
                                                                     target = "_blank",
                                                                     title = _ "Discussion with initiators"
                                                                 },
@@ -921,7 +920,7 @@ ui.container {
                                                 if initiator and initiator.accepted and not initiative.issue.half_frozen and not initiative.issue.closed and not initiative.revoked then
 						    slot.put(" ")
                                                     ui.link {
-							attr = { class = "btn btn-primary text-center" },
+							attr = { class = "btn btn-primary medium_btn text-center spaceline-bottom" },
                                                         text = _ "change discussion URL",
                                                         module = "initiative",
                                                         view = "edit",
@@ -929,7 +928,7 @@ ui.container {
                                                     }
 						    slot.put(" ")
 						    ui.link {
-                                                        attr = { class = "btn btn-primary text-center" },
+                                                        attr = { class = "btn btn-primary medium_btn text-center spaceline-bottom" },
                                                         content = _ "Revoke initiative",
                                                         module = "initiative",
                                                         view = "revoke",
@@ -940,6 +939,8 @@ ui.container {
                                                 end
                                             end
                                         }
+                                                    end
+                                                }
                                     else
                                         ui.heading { level = 6, content = _ "No author for this issue" }
                                     end
